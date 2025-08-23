@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments - Student Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .btn-custom {
+            border-radius: 25px;
+        }
+        footer {
+            margin-top: auto;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        .assignment-card {
+            transition: all 0.3s ease;
+        }
+        .assignment-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .due-date-badge {
+            font-size: 0.85rem;
+        }
+        .overdue {
+            background-color: #dc3545;
+        }
+        .due-soon {
+            background-color: #fd7e14;
+        }
+        .due-later {
+            background-color: #198754;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/web/dashboard">
+            <i class="fas fa-graduation-cap me-2"></i>Student Management
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/students">
+                        <i class="fas fa-user-graduate me-1"></i>Students
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/teachers">
+                        <i class="fas fa-chalkboard-teacher me-1"></i>Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/courses">
+                        <i class="fas fa-book me-1"></i>Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/web/assignments">
+                        <i class="fas fa-tasks me-1"></i>Assignments
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">
+                <i class="fas fa-tasks me-2 text-primary"></i>
+                <span th:if="${courseId}">Assignments for Course</span>
+                <span th:unless="${courseId}">All Assignments</span>
+            </h1>
+            <p class="text-muted" th:if="${courseId}">Manage assignments for this course</p>
+            <p class="text-muted" th:unless="${courseId}">View all assignments in the system</p>
+        </div>
+        <div class="btn-group" role="group">
+            <a th:href="@{'/web/courses/' + ${courseId}}" th:if="${courseId}" class="btn btn-outline-secondary btn-custom">
+                <i class="fas fa-arrow-left me-2"></i>Back to Course
+            </a>
+            <a th:href="@{'/web/assignments/create/course/' + ${courseId}}" th:if="${courseId}" class="btn btn-success btn-custom">
+                <i class="fas fa-plus me-2"></i>New Assignment
+            </a>
+            <a href="/web/assignments/create" th:unless="${courseId}" class="btn btn-success btn-custom">
+                <i class="fas fa-plus me-2"></i>New Assignment
+            </a>
+        </div>
+    </div>
+
+    <div class="row mb-4" th:if="${!assignments.isEmpty()}">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Total Assignments</h6>
+                            <h4 th:text="${#lists.size(assignments)}">0</h4>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-tasks fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Active</h6>
+                            <h4 id="activeCount">0</h4>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-play fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Due Soon</h6>
+                            <h4 id="dueSoonCount">0</h4>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-clock fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h6 class="card-title">Overdue</h6>
+                            <h4 id="overdueCount">0</h4>
+                        </div>
+                        <div class="align-self-center">
+                            <i class="fas fa-exclamation-triangle fa-2x opacity-75"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${assignments.isEmpty()}" class="text-center py-5">
+        <i class="fas fa-tasks fa-5x text-muted mb-4"></i>
+        <h4 class="text-muted">No assignments found</h4>
+        <p class="text-muted mb-4" th:if="${courseId}">Create your first assignment for this course.</p>
+        <p class="text-muted mb-4" th:unless="${courseId}">No assignments have been created yet.</p>
+        <a th:href="@{'/web/assignments/create/course/' + ${courseId}}" th:if="${courseId}" class="btn btn-success btn-custom">
+            <i class="fas fa-plus me-2"></i>Create First Assignment
+        </a>
+        <a href="/web/assignments/create" th:unless="${courseId}" class="btn btn-success btn-custom">
+            <i class="fas fa-plus me-2"></i>Create First Assignment
+        </a>
+    </div>
+
+    <div th:unless="${assignments.isEmpty()}" class="row">
+        <div th:each="assignment : ${assignments}" class="col-lg-6 col-xl-4 mb-4">
+            <div class="card assignment-card h-100">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="card-title mb-0" th:text="${assignment.name}">Assignment Name</h6>
+                    <span th:if="${assignment.expirationDate}"
+                          class="badge due-date-badge"
+                          th:classappend="${T(java.time.LocalDateTime).now().isAfter(assignment.expirationDate) ? 'overdue' :
+                     (T(java.time.LocalDateTime).now().plusDays(3).isAfter(assignment.expirationDate) ? 'due-soon' : 'due-later')}">
+    <i class="fas fa-clock me-1"></i>Due
+</span>
+                </div>
+                <div class="card-body">
+                    <p class="card-text text-muted" th:text="${assignment.description ?: 'No description available'}">Assignment description</p>
+
+                    <div th:if="${assignment.courseName}" class="mb-2">
+                        <span class="badge bg-info">
+                            <i class="fas fa-book me-1"></i>
+                            <span th:text="${assignment.courseName}">Course Name</span>
+                        </span>
+                    </div>
+
+                    <div class="assignment-details">
+                        <div class="row">
+                            <div class="col-12 mb-2" th:if="${assignment.expirationDate}">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar me-2"></i>
+                                    <strong>Due:</strong>
+                                    <span th:text="${#temporals.format(assignment.expirationDate, 'dd MMM yyyy HH:mm')}">01 Jan 2025 12:00</span>
+                                </small>
+                            </div>
+                            <div class="col-12" th:if="${assignment.originalFileName}">
+                                <small class="text-muted">
+                                    <i class="fas fa-paperclip me-2"></i>
+                                    <strong>Attachment:</strong>
+                                    <span th:text="${assignment.originalFileName}">document.pdf</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent d-flex justify-content-between align-items-center">
+                    <div class="btn-group btn-group-sm" role="group">
+                        <a th:href="@{'/web/assignments/' + ${assignment.id}}" class="btn btn-outline-primary">
+                            <i class="fas fa-eye me-1"></i> View
+                        </a>
+                        <a th:href="@{'/web/assignments/' + ${assignment.id} + '/download'}"
+                           th:if="${assignment.originalFileName}"
+                           class="btn btn-outline-success"
+                           title="Download file">
+                            <i class="fas fa-download me-1"></i> Download
+                        </a>
+                    </div>
+                    <small class="text-muted" th:if="${assignment.startDate}">
+                        Started: <span th:text="${#temporals.format(assignment.startDate, 'dd MMM')}">01 Jan</span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-md-none">
+        <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <a th:href="@{'/web/assignments/create/course/' + ${courseId}}" th:if="${courseId}"
+               class="btn btn-success btn-lg rounded-circle shadow">
+                <i class="fas fa-plus"></i>
+            </a>
+            <a href="/web/assignments/create" th:unless="${courseId}"
+               class="btn btn-success btn-lg rounded-circle shadow">
+                <i class="fas fa-plus"></i>
+            </a>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-muted">© 2025 Student Management System</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const assignments = /*[[${assignments}]]*/ [];
+        const now = new Date();
+
+        let activeCount = 0;
+        let dueSoonCount = 0;
+        let overdueCount = 0;
+
+        assignments.forEach(assignment => {
+            if (assignment.expirationDate) {
+                const dueDate = new Date(assignment.expirationDate);
+                const threeDaysFromNow = new Date(now.getTime() + (3 * 24 * 60 * 60 * 1000));
+
+                if (dueDate < now) {
+                    overdueCount++;
+                } else if (dueDate < threeDaysFromNow) {
+                    dueSoonCount++;
+                } else {
+                    activeCount++;
+                }
+            } else {
+                activeCount++;
+            }
+        });
+
+        document.getElementById('activeCount').textContent = activeCount;
+        document.getElementById('dueSoonCount').textContent = dueSoonCount;
+        document.getElementById('overdueCount').textContent = overdueCount;
+    });
+</script>
+</body>
+</html>

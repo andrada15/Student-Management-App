@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grades - Student Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .grade-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .grade-badge {
+            font-size: 1.1rem;
+            padding: 0.5rem 1rem;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/web/dashboard">
+            <i class="fas fa-graduation-cap me-2"></i>Student Management
+        </a>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                Grades for Student
+            </h1>
+            <p class="text-muted">View and manage student grades</p>
+        </div>
+        <a th:href="@{'/web/students/' + ${studentId}}" class="btn btn-outline-secondary btn-custom">
+            <i class="fas fa-arrow-left me-2"></i>Back to Student
+        </a>
+    </div>
+
+    <div th:if="${grades.isEmpty()}" class="text-center py-5">
+        <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">No grades recorded</h4>
+        <p class="text-muted">This student doesn't have any grades yet.</p>
+    </div>
+
+    <div th:unless="${grades.isEmpty()}">
+        <div th:each="grade : ${grades}" class="grade-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 th:text="${grade.courseName}">Course Name</h5>
+                <span class="badge grade-badge"
+                      th:classappend="${grade.grade >= 9} ? 'bg-success' :
+                                         (${grade.grade >= 7} ? 'bg-primary' :
+                                         (${grade.grade >= 5} ? 'bg-warning' : 'bg-danger'))">
+                        <span th:text="${grade.grade}">8.5</span>/10
+                    </span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p><i class="fas fa-calendar me-2"></i> <strong>Date:</strong>
+                        <span th:text="${#temporals.format(grade.date, 'dd MMM yyyy')}">15 Sep 2025</span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><i class="fas fa-user me-2"></i> <strong>Teacher:</strong>
+                        <span th:text="${grade.teacherName}">Jane Smith</span></p>
+                </div>
+            </div>
+
+            <div th:if="${grade.comments}">
+                <p><i class="fas fa-comment me-2"></i> <strong>Comments:</strong></p>
+                <p class="text-muted" th:text="${grade.comments}">Teacher comments about the grade...</p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h5><i class="fas fa-calculator me-2"></i> Grade Average</h5>
+            <div class="d-flex align-items-center">
+                <div class="progress flex-grow-1" style="height: 30px;">
+                    <div class="progress-bar"
+                         role="progressbar"
+                         th:style="'width: ' + ${gradeAverage} * 10 + '%;'"
+                         th:attr="aria-valuenow=${gradeAverage * 10}"
+                         aria-valuemin="0"
+                         aria-valuemax="100">
+                    </div>
+                </div>
+                <div class="ms-3">
+                    <span class="h4" th:text="${gradeAverage}">7.8</span>
+                    <span class="text-muted">/10</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-muted">© 2025 Student Management System</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = '/web/login';
+            return;
+        }
+
+        fetch('/api/student/profile', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    localStorage.removeItem('jwtToken');
+                    window.location.href = '/web/login';
+                }
+            })
+            .catch(error => {
+                console.error('Authentication error:', error);
+                localStorage.removeItem('jwtToken');
+                window.location.href = '/web/login';
+            });
+    });
+</script></body>
+</html>
