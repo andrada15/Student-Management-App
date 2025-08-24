@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ro.scoalainformala.studentmgmt.department.DepartmentEnum;
 
 import java.util.List;
 
@@ -30,8 +31,8 @@ class TeacherControllerUnitTest {
     @Test
     void testGetTeachers() {
         List<TeacherDTO> mockedTeachers = List.of(
-                TeacherDTO.builder().id(1L).firstName("Alice").lastName("Smith").email("alice@example.com").department("Physics").build(),
-                TeacherDTO.builder().id(2L).firstName("Bob").lastName("Johnson").email("bob@example.com").department("Chemistry").build()
+                TeacherDTO.builder().id(1L).firstName("Alice").lastName("Smith").email("alice@example.com").department(DepartmentEnum.Engineering).build(),
+                TeacherDTO.builder().id(2L).firstName("Bob").lastName("Johnson").email("bob@example.com").department(DepartmentEnum.Engineering).build()
         );
 
         when(teacherService.getAllTeachers()).thenReturn(mockedTeachers);
@@ -50,7 +51,7 @@ class TeacherControllerUnitTest {
                 .firstName("Emma")
                 .lastName("Brown")
                 .email("emma@example.com")
-                .department("Biology")
+                .department(DepartmentEnum.Engineering)
                 .build();
 
         when(teacherService.getTeacherById(id)).thenReturn(mockedTeacher);
@@ -67,7 +68,7 @@ class TeacherControllerUnitTest {
                 .firstName("John")
                 .lastName("Doe")
                 .email("john.doe@example.com")
-                .department("Mathematics")
+                .department(DepartmentEnum.Engineering)
                 .build();
 
         TeacherDTO createdTeacher = TeacherDTO.builder()
@@ -75,7 +76,7 @@ class TeacherControllerUnitTest {
                 .firstName("John")
                 .lastName("Doe")
                 .email("john.doe@example.com")
-                .department("Mathematics")
+                .department(DepartmentEnum.Engineering)
                 .build();
 
         when(teacherService.createTeacher(teacherDTO)).thenReturn(createdTeacher);
@@ -92,7 +93,7 @@ class TeacherControllerUnitTest {
                 .firstName("UpdatedName")
                 .lastName("UpdatedLast")
                 .email("updated@example.com")
-                .department("UpdatedDept")
+                .department(DepartmentEnum.Engineering)
                 .build();
 
         TeacherDTO updatedTeacher = TeacherDTO.builder()
@@ -100,7 +101,7 @@ class TeacherControllerUnitTest {
                 .firstName("UpdatedName")
                 .lastName("UpdatedLast")
                 .email("updated@example.com")
-                .department("UpdatedDept")
+                .department(DepartmentEnum.Engineering)
                 .build();
 
         when(teacherService.updateTeacher(id, updateData)).thenReturn(updatedTeacher);
