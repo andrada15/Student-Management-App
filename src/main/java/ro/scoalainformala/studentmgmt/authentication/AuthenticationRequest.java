@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AuthenticationRequest {
-    String email;
-    String password;
-    String roleName;
+    private String email;
+    private String password;
+    private String roleName;
 }

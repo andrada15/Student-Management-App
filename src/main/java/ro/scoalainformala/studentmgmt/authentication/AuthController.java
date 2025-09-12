@@ -43,18 +43,4 @@ public class AuthController {
             throw e;
         }
     }
-
-    @PostMapping("/admin/create-user")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<AuthenticationResponse> createUser(@RequestBody AuthenticationRequest request) {
-        log.info("Admin user creation request received for email: {}", request.getEmail());
-        try {
-            AuthenticationResponse response = authenticationService.register(request);
-            log.info("Admin user creation successful for email: {}", request.getEmail());
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            log.error("Admin user creation failed for email: {}", request.getEmail(), e);
-            throw e;
-        }
-    }
 }

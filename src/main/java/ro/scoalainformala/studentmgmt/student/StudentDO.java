@@ -2,6 +2,8 @@ package ro.scoalainformala.studentmgmt.student;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import ro.scoalainformala.studentmgmt.assignment.AssignmentDO;
 import ro.scoalainformala.studentmgmt.courses.CourseDO;
@@ -21,18 +23,21 @@ public class StudentDO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
     private String lastName;
 
+    @Email
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(unique = true, nullable = false)
     private String phone;
 
+    @NotEmpty
     @Column(nullable = false)
     private String address;
 

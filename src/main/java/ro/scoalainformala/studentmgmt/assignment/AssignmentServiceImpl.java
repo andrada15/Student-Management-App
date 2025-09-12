@@ -2,7 +2,6 @@ package ro.scoalainformala.studentmgmt.assignment;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Builder;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.quartz.SchedulerException;
 import org.springframework.core.io.Resource;
@@ -26,7 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
 @Builder
 @RequiredArgsConstructor
 @Service

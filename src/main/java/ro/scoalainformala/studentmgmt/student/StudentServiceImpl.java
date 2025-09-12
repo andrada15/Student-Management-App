@@ -13,13 +13,11 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
-    private final StudentValidator studentValidator;
 
     @Autowired
-    public StudentServiceImpl(final StudentRepository studentRepository, final StudentMapper studentMapper, final StudentValidator studentValidator) {
+    public StudentServiceImpl(final StudentRepository studentRepository, final StudentMapper studentMapper) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
-        this.studentValidator = studentValidator;
     }
 
 
@@ -38,7 +36,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO addStudent(StudentDTO student) {
-        studentValidator.validateStudent(student);
         final StudentDO studentDO = studentMapper.mapDtoToDo(student);
         final StudentDO savedStudentDO = studentRepository.save(studentDO);
         return studentMapper.mapDoToDto(savedStudentDO);
@@ -46,7 +43,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO updateStudent(final Long id, StudentDTO student) {
-        studentValidator.validateStudent(student);
         final Optional<StudentDO> studentDO = studentRepository.findById(student.getId());
         return studentDO.map(studentsFromDB -> {
             copyPropertiesFromDtoToDo(student, studentsFromDB);
