@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Student Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .management-card {
+            transition: all 0.3s ease;
+        }
+        .management-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        .assignment-status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-upcoming {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .status-completed {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .navbar-nav .nav-link.active {
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e3e6f0;
+        }
+        .bg-primary {
+            background-color: #4e73df !important;
+        }
+        .border-left-primary {
+            border-left: 0.25rem solid #4e73df !important;
+        }
+        .border-left-success {
+            border-left: 0.25rem solid #1cc88a !important;
+        }
+        .border-left-info {
+            border-left: 0.25rem solid #36b9cc !important;
+        }
+        .border-left-warning {
+            border-left: 0.25rem solid #f6c23e !important;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/web/dashboard">
+            <i class="fas fa-graduation-cap me-2"></i>Student Management
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/students">
+                        <i class="fas fa-user-graduate me-1"></i>Students
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/teachers">
+                        <i class="fas fa-chalkboard-teacher me-1"></i>Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/courses">
+                        <i class="fas fa-book me-1"></i>Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/web/assignments">
+                        <i class="fas fa-tasks me-1"></i>Assignments
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt me-1"></i>Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">
+            <i class="fas fa-tachometer-alt me-2 text-primary"></i>
+            Dashboard
+        </h1>
+    </div>
+
+    <div id="errorAlert" class="alert alert-danger alert-dismissible fade show d-none">
+        <i class="fas fa-exclamation-circle me-2"></i>
+        <span id="errorMessage"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Students
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="studentsCount">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-user-graduate fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                Teachers
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="teachersCount">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chalkboard-teacher fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Courses
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="coursesCount">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-book fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning h-100 py-2">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                Assignments
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="assignmentsCount">0</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-tasks fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Students</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="recentStudents">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Teachers</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="recentTeachers">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">Available Courses</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="coursesList">
+                            <thead>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Teachers</th>
+                                <th>Students Count</th>
+                                <th>Assignments</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Assignments</h6>
+                    <a href="/web/assignments" class="btn btn-sm btn-outline-primary">View All</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="assignmentsList">
+                            <thead>
+                            <tr>
+                                <th>Assignment Name</th>
+                                <th>Course</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-muted">© 2025 Student Management System</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwtToken');
+        if (!token) {
+            window.location.href = '/web/login';
+            return;
+        }
+
+        function authenticatedFetch(url, options = {}) {
+            options.headers = options.headers || {};
+            options.headers['Authorization'] = `Bearer ${token}`;
+            options.headers['Content-Type'] = 'application/json';
+            return fetch(url, options);
+        }
+
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('jwtToken');
+            window.location.href = '/web/login';
+        });
+
+        function showError(message) {
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorAlert.classList.remove('d-none');
+        }
+
+        function formatFullName(firstName, lastName) {
+            return `${firstName || ''} ${lastName || ''}`.trim() || 'N/A';
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+        }
+
+        function getAssignmentStatus(expirationDate) {
+            if (!expirationDate) return 'N/A';
+
+            const now = new Date();
+            const dueDate = new Date(expirationDate);
+
+            if (dueDate < now) {
+                return '<span class="assignment-status status-completed">Completed</span>';
+            } else if ((dueDate - now) / (1000 * 60 * 60 * 24) <= 7) {
+                return '<span class="assignment-status status-active">Due Soon</span>';
+            } else {
+                return '<span class="assignment-status status-upcoming">Upcoming</span>';
+            }
+        }
+
+        console.log('Starting to fetch dashboard data...');
+
+        Promise.all([
+            authenticatedFetch('/api/student'),
+            authenticatedFetch('/api/teacher'),
+            authenticatedFetch('/api/courses'),
+            authenticatedFetch('/api/assignments')
+        ])
+            .then(responses => {
+                console.log('Received responses:', responses.map(r => ({ status: r.status, ok: r.ok })));
+
+                responses.forEach((response, index) => {
+                    if (!response.ok) {
+                        if (response.status === 401) {
+                            localStorage.removeItem('jwtToken');
+                            window.location.href = '/web/login';
+                            return;
+                        }
+                        throw new Error(`Request ${index} failed with status ${response.status}`);
+                    }
+                });
+                return Promise.all(responses.map(res => res.json()));
+            })
+            .then(([students, teachers, courses, assignments]) => {
+                console.log('Parsed data:', {
+                    students: students?.length || 0,
+                    teachers: teachers?.length || 0,
+                    courses: courses?.length || 0,
+                    assignments: assignments?.length || 0
+                });
+
+                document.getElementById('studentsCount').textContent = students?.length || 0;
+                document.getElementById('teachersCount').textContent = teachers?.length || 0;
+                document.getElementById('coursesCount').textContent = courses?.length || 0;
+                document.getElementById('assignmentsCount').textContent = assignments?.length || 0;
+
+                const recentStudents = (students || []).slice(0, 5);
+                const studentsTable = document.querySelector('#recentStudents tbody');
+                studentsTable.innerHTML = '';
+
+                if (recentStudents.length === 0) {
+                    studentsTable.innerHTML = '<tr><td colspan="3" class="text-center">No students found</td></tr>';
+                } else {
+                    recentStudents.forEach(student => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${formatFullName(student.firstName, student.lastName)}</td>
+                            <td>${student.email || 'N/A'}</td>
+                            <td>Dept ${student.departmentId || 'N/A'}</td>
+                        `;
+                        studentsTable.appendChild(row);
+                    });
+                }
+
+                const recentTeachers = (teachers || []).slice(0, 5);
+                const teachersTable = document.querySelector('#recentTeachers tbody');
+                teachersTable.innerHTML = '';
+
+                if (recentTeachers.length === 0) {
+                    teachersTable.innerHTML = '<tr><td colspan="3" class="text-center">No teachers found</td></tr>';
+                } else {
+                    recentTeachers.forEach(teacher => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${formatFullName(teacher.firstName, teacher.lastName)}</td>
+                            <td>${teacher.email || 'N/A'}</td>
+                            <td>${teacher.department || 'N/A'}</td>
+                        `;
+                        teachersTable.appendChild(row);
+                    });
+                }
+
+                const coursesTable = document.querySelector('#coursesList tbody');
+                coursesTable.innerHTML = '';
+
+                if ((courses || []).length === 0) {
+                    coursesTable.innerHTML = '<tr><td colspan="4" class="text-center">No courses found</td></tr>';
+                } else {
+                    courses.forEach(course => {
+                        const row = document.createElement('tr');
+                        const teacherNames = (course.teacher || []).map(t =>
+                            formatFullName(t.firstName, t.lastName)
+                        ).join(', ') || 'No teachers';
+
+                        const studentCount = (course.students || []).length;
+
+                        const courseAssignments = (assignments || []).filter(a => a.courseId === course.id);
+                        const assignmentCount = courseAssignments.length;
+
+                        row.innerHTML = `
+                            <td>${course.name || 'N/A'}</td>
+                            <td>${teacherNames}</td>
+                            <td>${studentCount}</td>
+                            <td>${assignmentCount} assignments</td>
+                        `;
+                        coursesTable.appendChild(row);
+                    });
+                }
+
+                const recentAssignments = (assignments || []).slice(0, 5);
+                const assignmentsTable = document.querySelector('#assignmentsList tbody');
+                assignmentsTable.innerHTML = '';
+
+                if (recentAssignments.length === 0) {
+                    assignmentsTable.innerHTML = '<tr><td colspan="4" class="text-center">No assignments found</td></tr>';
+                } else {
+                    recentAssignments.forEach(assignment => {
+                        const row = document.createElement('tr');
+
+                        const course = (courses || []).find(c => c.id === assignment.courseId) || {};
+
+                        row.innerHTML = `
+                            <td>${assignment.name || 'N/A'}</td>
+                            <td>${course.name || 'Unknown Course'}</td>
+                            <td>${formatDate(assignment.expirationDate)}</td>
+                            <td>${getAssignmentStatus(assignment.expirationDate)}</td>
+                        `;
+                        assignmentsTable.appendChild(row);
+                    });
+                }
+
+                console.log('Dashboard populated successfully');
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+                showError('Failed to load dashboard data. Please check the console for details.');
+            });
+    });
+</script>
+</body>
+</html>

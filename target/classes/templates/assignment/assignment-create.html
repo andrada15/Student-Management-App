@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Assignment - Student Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .btn-custom {
+            border-radius: 25px;
+        }
+        footer {
+            margin-top: auto;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .file-upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: #0d6efd;
+            background-color: #f8f9ff;
+        }
+        .file-upload-area.dragover {
+            border-color: #0d6efd;
+            background-color: #e7f3ff;
+        }
+        .progress {
+            margin-top: 1rem;
+            display: none;
+        }
+        .alert {
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/web/dashboard">
+            <i class="fas fa-graduation-cap me-2"></i>Student Management
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/students">
+                        <i class="fas fa-user-graduate me-1"></i>Students
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/teachers">
+                        <i class="fas fa-chalkboard-teacher me-1"></i>Teachers
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/web/courses">
+                        <i class="fas fa-book me-1"></i>Courses
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/web/assignments">
+                        <i class="fas fa-tasks me-1"></i>Assignments
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">
+                <i class="fas fa-plus me-2 text-primary"></i>
+                Create New Assignment
+            </h1>
+            <p class="text-muted">Add a new assignment to the course</p>
+        </div>
+        <div>
+            <a th:href="@{'/web/courses/' + ${courseId}}" th:if="${courseId}" class="btn btn-outline-secondary btn-custom">
+                <i class="fas fa-arrow-left me-2"></i>Back to Course
+            </a>
+            <a href="/web/assignments" class="btn btn-outline-info btn-custom">
+                <i class="fas fa-list me-2"></i>All Assignments
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <form id="assignmentForm" enctype="multipart/form-data">
+                <div class="form-section">
+                    <h5 class="mb-3"><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Assignment Name *</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                        <div class="invalid-feedback">
+                            Please provide a valid assignment name.
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4"
+                                  placeholder="Enter assignment description..."></textarea>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="courseId" class="form-label">Course *</label>
+                            <select class="form-select" id="courseId" name="courseId" required>
+                                <option value="">Select a course...</option>
+                                <option th:each="course : ${courses}"
+                                        th:value="${course.id}"
+                                        th:text="${course.name}"
+                                        th:selected="${courseId != null and courseId == course.id}">
+                                    Course Name
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a course.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h5 class="mb-3"><i class="fas fa-calendar me-2"></i>Schedule</h5>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="startDate" class="form-label">Start Date & Time</label>
+                            <input type="datetime-local" class="form-control" id="startDate" name="startDate">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="expirationDate" class="form-label">Due Date & Time *</label>
+                            <input type="datetime-local" class="form-control" id="expirationDate" name="expirationDate" required>
+                            <div class="invalid-feedback">
+                                Please provide a due date.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h5 class="mb-3"><i class="fas fa-file-upload me-2"></i>Assignment File</h5>
+
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <input type="file" id="fileInput" name="file" style="display: none;" accept=".pdf,.doc,.docx,.txt,.zip">
+                        <i class="fas fa-cloud-upload-alt fa-3x text-muted mb-2"></i>
+                        <p class="mb-2">Click to select a file or drag and drop</p>
+                        <p class="text-muted small">Supported formats: PDF, DOC, DOCX, TXT, ZIP (Max 10MB)</p>
+                    </div>
+
+                    <div id="fileInfo" class="mt-2" style="display: none;">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-file me-2"></i>
+                            <span id="fileName"></span>
+                            <button type="button" class="btn btn-sm btn-outline-danger ms-auto" id="removeFile">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="progress" id="uploadProgress">
+                        <div class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h5 class="mb-3"><i class="fas fa-plus-circle me-2"></i>Additional Information</h5>
+
+                    <div class="mb-3">
+                        <label for="additionalInfo" class="form-label">Additional Instructions</label>
+                        <textarea class="form-control" id="additionalInfo" name="additionalInfo" rows="3"
+                                  placeholder="Any additional instructions or notes for students..."></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary btn-custom" onclick="window.history.back()">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-custom" id="submitBtn">
+                        <i class="fas fa-save me-2"></i>Create Assignment
+                    </button>
+                </div>
+            </form>
+
+            <div id="alertContainer"></div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title mb-0">
+                        <i class="fas fa-lightbulb me-2"></i>Tips for Creating Assignments
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Use clear, descriptive assignment names
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Provide detailed instructions in the description
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Set realistic due dates
+                        </li>
+                        <li class="mb-2">
+                            <i class="fas fa-check text-success me-2"></i>
+                            Include reference materials when needed
+                        </li>
+                        <li>
+                            <i class="fas fa-check text-success me-2"></i>
+                            Double-check all information before submitting
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-muted">© 2025 Student Management System</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('assignmentForm');
+        const fileUploadArea = document.getElementById('fileUploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const removeFileBtn = document.getElementById('removeFile');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = uploadProgress.querySelector('.progress-bar');
+        const submitBtn = document.getElementById('submitBtn');
+        const alertContainer = document.getElementById('alertContainer');
+
+        fileUploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.add('dragover');
+        });
+
+        fileUploadArea.addEventListener('dragleave', () => {
+            fileUploadArea.classList.remove('dragover');
+        });
+
+        fileUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileUploadArea.classList.remove('dragover');
+
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        removeFileBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            fileInfo.style.display = 'none';
+            fileUploadArea.style.display = 'block';
+        });
+
+        function handleFileSelect(file) {
+
+            if (file.size > 10 * 1024 * 1024) {
+                showAlert('File size must be less than 10MB', 'danger');
+                return;
+            }
+            const allowedTypes = ['.pdf', '.doc', '.docx', '.txt', '.zip'];
+            const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+            if (!allowedTypes.includes(fileExtension)) {
+                showAlert('Please select a valid file type (PDF, DOC, DOCX, TXT, ZIP)', 'danger');
+                return;
+            }
+
+            fileName.textContent = file.name;
+            fileInfo.style.display = 'block';
+            fileUploadArea.style.display = 'none';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!form.checkValidity()) {
+                e.stopPropagation();
+                form.classList.add('was-validated');
+                return;
+            }
+
+            if (!fileInput.files.length) {
+                showAlert('Please select a file for the assignment', 'danger');
+                return;
+            }
+
+            const formData = new FormData();
+
+
+            const assignment = {
+                name: document.getElementById('name').value,
+                description: document.getElementById('description').value,
+                courseId: parseInt(document.getElementById('courseId').value),
+                startDate: document.getElementById('startDate').value || null,
+                expirationDate: document.getElementById('expirationDate').value,
+                additionalInfo: document.getElementById('additionalInfo').value,
+                studentId: []
+            };
+
+            console.log('Assignment data:', assignment);
+
+            formData.append('assignment', JSON.stringify(assignment));
+
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating...';
+                uploadProgress.style.display = 'block';
+
+                const token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
+
+                const headers = {};
+                if (token) {
+                    headers['Authorization'] = `Bearer ${token}`;
+                }
+
+                console.log('Sending request to /api/assignments');
+
+                const response = await fetch('/api/assignments', {
+                    method: 'POST',
+                    body: formData,
+                    headers: headers,
+                    credentials: 'same-origin'
+                });
+
+                console.log('Response status:', response.status);
+
+                if (response.ok) {
+                    const result = await response.json();
+                    showAlert('Assignment created successfully!', 'success');
+
+                    setTimeout(() => {
+                        const courseId = document.getElementById('courseId').value;
+                        if (courseId) {
+                            window.location.href = `/web/assignments/course/${courseId}`;
+                        } else {
+                            window.location.href = '/web/assignments';
+                        }
+                    }, 2000);
+                } else {
+                    let errorMessage;
+                    try {
+                        const errorData = await response.json();
+                        errorMessage = errorData.message || errorData.error || 'Unknown error';
+                    } catch {
+                        errorMessage = await response.text() || `HTTP ${response.status}`;
+                    }
+                    showAlert(`Error creating assignment: ${errorMessage}`, 'danger');
+                    console.error('Error response:', errorMessage);
+                }
+            } catch (error) {
+                showAlert(`Network error: ${error.message}`, 'danger');
+                console.error('Network error:', error);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-save me-2"></i>Create Assignment';
+                uploadProgress.style.display = 'none';
+            }
+        });
+
+        function showAlert(message, type) {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+            alertDiv.innerHTML = `
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+
+            alertContainer.innerHTML = '';
+            alertContainer.appendChild(alertDiv);
+
+
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    const alert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+                    alert.close();
+                }
+            }, 5000);
+        }
+
+        const now = new Date();
+        const today = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+        document.getElementById('startDate').min = today;
+        document.getElementById('expirationDate').min = today;
+
+        document.getElementById('startDate').value = today;
+    })
+</script>
+</body>
+</html>

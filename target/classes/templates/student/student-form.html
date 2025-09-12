@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${student.id != null ? 'Edit Student - Student Management' : 'New Student - Student Management'}">
+        New Student - Student Management
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .form-floating .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="/web/dashboard">
+            <i class="fas fa-graduation-cap me-2"></i>Student Management
+        </a>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div th:if="${message}" class="alert alert-dismissible fade show"
+         th:classappend="${message.contains('success')} ? 'alert-success' : 'alert-danger'"
+         role="alert">
+        <i th:classappend="${message.contains('success')} ? 'fas fa-check-circle' : 'fas fa-exclamation-circle'"
+           class="me-2"></i>
+        <span th:text="${message}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">
+                <i class="fas fa-user-graduate me-2 text-primary"></i>
+                <span th:text="${student.id != null ? 'Edit Student' : 'Add New Student'}">Add New Student</span>
+            </h1>
+            <p class="text-muted">
+                <span th:text="${student.id != null ? 'Update student details' : 'Enter student information'}">
+                    Enter student information
+                </span>
+            </p>
+        </div>
+        <a href="/web/students" class="btn btn-outline-secondary btn-custom">
+            <i class="fas fa-arrow-left me-2"></i>Back to List
+        </a>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <form th:action="${student.id != null ? '/web/students/' + student.id : '/web/students'}"
+                          th:object="${student}"
+                          method="post"
+                          novalidate>
+
+                        <input type="hidden" th:field="*{id}">
+
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                        <div class="form-floating mb-3">
+                            <input type="text"
+                                   class="form-control"
+                                   th:class="${#fields.hasErrors('firstName')} ? 'form-control is-invalid' : 'form-control'"
+                                   id="firstName"
+                                   th:field="*{firstName}"
+                                   placeholder="Enter first name"
+                                   required>
+                            <label for="firstName">
+                                <i class="fas fa-user me-2"></i>First Name
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">
+                                First name is required
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="text"
+                                   class="form-control"
+                                   th:class="${#fields.hasErrors('lastName')} ? 'form-control is-invalid' : 'form-control'"
+                                   id="lastName"
+                                   th:field="*{lastName}"
+                                   placeholder="Enter last name"
+                                   required>
+                            <label for="lastName">
+                                <i class="fas fa-user me-2"></i>Last Name
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                                Last name is required
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="email"
+                                   class="form-control"
+                                   th:class="${#fields.hasErrors('email')} ? 'form-control is-invalid' : 'form-control'"
+                                   id="email"
+                                   th:field="*{email}"
+                                   placeholder="Enter email address"
+                                   required>
+                            <label for="email">
+                                <i class="fas fa-envelope me-2"></i>Email Address
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                Valid email is required
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="tel"
+                                   class="form-control"
+                                   th:class="${#fields.hasErrors('phone')} ? 'form-control is-invalid' : 'form-control'"
+                                   id="phone"
+                                   th:field="*{phone}"
+                                   placeholder="Enter phone number">
+                            <label for="phone">
+                                <i class="fas fa-phone me-2"></i>Phone Number
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}">
+                                Please provide a valid phone number
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control"
+                                      th:class="${#fields.hasErrors('address')} ? 'form-control is-invalid' : 'form-control'"
+                                      id="address"
+                                      th:field="*{address}"
+                                      placeholder="Enter address"
+                                      style="height: 100px"></textarea>
+                            <label for="address">
+                                <i class="fas fa-home me-2"></i>Address
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
+                                Please provide a valid address
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number"
+                                   class="form-control"
+                                   th:class="${#fields.hasErrors('departmentId')} ? 'form-control is-invalid' : 'form-control'"
+                                   id="departmentId"
+                                   th:field="*{departmentId}"
+                                   placeholder="Department ID"
+                                   min="0"
+                                   max="3">
+                            <label for="departmentId">
+                                <i class="fas fa-building me-2"></i>Department ID (0-3)
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('departmentId')}" th:errors="*{departmentId}">
+                                Please provide a valid department ID between 0 and 3
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <select class="form-select"
+                                    th:class="${#fields.hasErrors('collegeYear')} ? 'form-select is-invalid' : 'form-select'"
+                                    id="collegeYear"
+                                    th:field="*{collegeYear}"
+                                    required>
+                                <option value="">Select Year</option>
+                                <option value="1">Year 1</option>
+                                <option value="2">Year 2</option>
+                                <option value="3">Year 3</option>
+                                <option value="4">Year 4</option>
+                            </select>
+                            <label for="collegeYear">
+                                <i class="fas fa-calendar me-2"></i>College Year
+                            </label>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('collegeYear')}" th:errors="*{collegeYear}">
+                                Please select a college year
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a href="/web/students" class="btn btn-secondary btn-custom">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-custom">
+                                <i class="fas fa-save me-2"></i>
+                                <span th:text="${student.id != null ? 'Update Student' : 'Create Student'}">
+                                    Create Student
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-light py-3 mt-5">
+    <div class="container text-center">
+        <span class="text-muted">© 2025 Student Management System</span>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html><!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Student Form</title>-->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        .form-floating .form-control:focus {-->
+<!--            border-color: #0d6efd;-->
+<!--            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-primary">-->
+<!--    <div class="container">-->
+<!--        <a class="navbar-brand" href="/web/dashboard">-->
+<!--            <i class="fas fa-graduation-cap me-2"></i>Student Management-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</nav>-->
+
+<!--<main class="container my-4">-->
+<!--    <div class="d-flex justify-content-between align-items-center mb-4">-->
+<!--        <div>-->
+<!--            <h1 class="h3">-->
+<!--                <i class="fas fa-user-graduate me-2 text-primary"></i>-->
+<!--                <span id="formTitle">Add New Student</span>-->
+<!--            </h1>-->
+<!--            <p class="text-muted" id="formDescription">Enter student information</p>-->
+<!--        </div>-->
+<!--        <a href="/web/students" class="btn btn-outline-secondary btn-custom">-->
+<!--            <i class="fas fa-arrow-left me-2"></i>Back to List-->
+<!--        </a>-->
+<!--    </div>-->
+
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="col-lg-8">-->
+<!--            <div class="card shadow-sm">-->
+<!--                <div class="card-body p-4">-->
+<!--                    <form id="studentForm" novalidate>-->
+<!--                        <input type="hidden" id="studentId">-->
+
+<!--                        <div class="form-floating mb-3">-->
+<!--                            <input type="text" class="form-control" id="name" placeholder="Enter full name" required>-->
+<!--                            <label for="name">-->
+<!--                                <i class="fas fa-user me-2"></i>Full Name-->
+<!--                            </label>-->
+<!--                            <div class="invalid-feedback">Please enter a valid name</div>-->
+<!--                        </div>-->
+
+<!--                        <div class="form-floating mb-3">-->
+<!--                            <input type="email" class="form-control" id="email" placeholder="Enter email address" required>-->
+<!--                            <label for="email">-->
+<!--                                <i class="fas fa-envelope me-2"></i>Email Address-->
+<!--                            </label>-->
+<!--                            <div class="invalid-feedback">Please enter a valid email</div>-->
+<!--                        </div>-->
+
+<!--                        <div class="d-flex justify-content-end gap-2">-->
+<!--                            <a href="/web/students" class="btn btn-secondary btn-custom">-->
+<!--                                <i class="fas fa-times me-2"></i>Cancel-->
+<!--                            </a>-->
+<!--                            <button type="submit" class="btn btn-primary btn-custom">-->
+<!--                                <i class="fas fa-save me-2"></i>-->
+<!--                                <span id="submitButtonText">Create Student</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</main>-->
+
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        const token = localStorage.getItem('jwtToken');-->
+<!--        if (!token) {-->
+<!--            window.location.href = '/web/login';-->
+<!--            return;-->
+<!--        }-->
+
+<!--        const path = window.location.pathname;-->
+<!--        const isEdit = path.includes('/edit');-->
+<!--        const studentId = path.split('/').pop();-->
+
+<!--        if (isEdit || path.includes('/students/')) {-->
+<!--            document.getElementById('formTitle').textContent = 'Edit Student';-->
+<!--            document.getElementById('formDescription').textContent = 'Update student details';-->
+<!--            document.getElementById('submitButtonText').textContent = 'Update Student';-->
+
+<!--            // Fetch student data for editing/viewing-->
+<!--            fetch(`/api/student/${studentId}`, {-->
+<!--                headers: {-->
+<!--                    'Authorization': `Bearer ${token}`-->
+<!--                }-->
+<!--            })-->
+<!--                .then(response => response.json())-->
+<!--                .then(student => {-->
+<!--                    document.getElementById('studentId').value = student.id;-->
+<!--                    document.getElementById('name').value = student.name;-->
+<!--                    document.getElementById('email').value = student.email;-->
+<!--                });-->
+<!--        }-->
+
+<!--        // Form submission-->
+<!--        document.getElementById('studentForm').addEventListener('submit', async (e) => {-->
+<!--            e.preventDefault();-->
+
+<!--            const studentData = {-->
+<!--                name: document.getElementById('name').value,-->
+<!--                email: document.getElementById('email').value-->
+<!--            };-->
+
+<!--            if (isEdit) {-->
+<!--                studentData.id = studentId;-->
+<!--            }-->
+
+<!--            try {-->
+<!--                const url = isEdit ? `/api/student/${studentId}` : '/api/student/add';-->
+<!--                const method = isEdit ? 'PUT' : 'POST';-->
+
+<!--                const response = await fetch(url, {-->
+<!--                    method: method,-->
+<!--                    headers: {-->
+<!--                        'Authorization': `Bearer ${token}`,-->
+<!--                        'Content-Type': 'application/json'-->
+<!--                    },-->
+<!--                    body: JSON.stringify(studentData)-->
+<!--                });-->
+
+<!--                if (response.ok) {-->
+<!--                    window.location.href = '/web/students';-->
+<!--                } else {-->
+<!--                    const error = await response.text();-->
+<!--                    alert(`Error: ${error}`);-->
+<!--                }-->
+<!--            } catch (error) {-->
+<!--                console.error('Error saving student:', error);-->
+<!--                alert('Failed to save student');-->
+<!--            }-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
