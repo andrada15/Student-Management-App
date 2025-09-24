@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="55880f63-19be-48bb-871b-4793f8ba33e3" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Enum" />
+        <option value="Exception" />
+        <option value="JUnit5 Test Class" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="version1" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2xfnvYP3Y6qk6YNlAxsFnGjb08X" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JUnit.AssignmentControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AssignmentControllerUnitTest.testCreateAssignment.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AssignmentMapperImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AssignmentServiceImplTest.getAllAssignmentsByCourseId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthControllerUnitTest.testRegisterSuccess.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthenticationServiceImplTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthenticationServiceImplTest.testAuthenticateValidCredentials.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthenticationServiceImplTest.testRegisterRoleTeacher.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.AuthenticationServiceImplTest.testRegisterUserAlreadyExists.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.testAddCourse.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.testDeleteCourseById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.testGetCourseById.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.testGetCourseByName.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.CourseControllerUnitTest.testGetCourses.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GradesControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GradesMapperImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GradesServiceImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GradesServiceImplUnitTest.getAllGradesByStudentId.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentControllerUnitTest.testGetStudentProfile.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentMapperImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentMapperImplUnitTest.mapDtoToListDoList.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentMapperImplUnitTest.testMapDoToDto.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentMapperImplUnitTest.testMapDoToDtoList.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentMapperImplUnitTest.testMapDtoToDo.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentValidatorImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.StudentValidatorImplUnitTest.testValidateStudentHappyPath.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherControllerUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherMapperImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherServiceImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherServiceImplUnitTest.testGetTeacherByIdNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TeacherServiceImplUnitTest.updateTeacher.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDetailsServiceImplUnitTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDetailsServiceImplUnitTest.testLoadUserByUsername.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.UserDetailsServiceImplUnitTest.testLoadUsernameNotFound.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.StudentMgmtApplication.executor&quot;: &quot;Run&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
+    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Nick/OneDrive/Documente/CursJava/student-mgmt&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql_aurora&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\templates\auth" />
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\templates\teacher" />
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\templates\student" />
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\templates\grades" />
+      <recent name="C:\Users\Nick\OneDrive\Documente\CursJava\student-mgmt\src\main\resources\templates\course" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="ro.scoalainformala.studentmgmt.teacher" />
+      <recent name="ro.scoalainformala.studentmgmt.student" />
+      <recent name="ro.scoalainformala.studentmgmt.grades" />
+      <recent name="ro.scoalainformala.studentmgmt.authentication" />
+      <recent name="ro.scoalainformala.studentmgmt.courses" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="ro.scoalainformala.studentmgmt.user" />
+      <recent name="ro.scoalainformala.studentmgmt.teacher" />
+      <recent name="ro.scoalainformala.studentmgmt.student" />
+      <recent name="ro.scoalainformala.studentmgmt.role" />
+      <recent name="ro.scoalainformala.studentmgmt.grades" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.StudentMgmtApplication">
+    <configuration name="AssignmentControllerUnitTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.scoalainformala.studentmgmt.assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ro.scoalainformala.studentmgmt.assignment" />
+      <option name="MAIN_CLASS_NAME" value="ro.scoalainformala.studentmgmt.assignment.AssignmentControllerUnitTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AssignmentControllerUnitTest.testCreateAssignment" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.scoalainformala.studentmgmt.assignment.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ro.scoalainformala.studentmgmt.assignment" />
+      <option name="MAIN_CLASS_NAME" value="ro.scoalainformala.studentmgmt.assignment.AssignmentControllerUnitTest" />
+      <option name="METHOD_NAME" value="testCreateAssignment" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthenticationServiceImplTest.testAuthenticateValidCredentials" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.scoalainformala.studentmgmt.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ro.scoalainformala.studentmgmt.authentication" />
+      <option name="MAIN_CLASS_NAME" value="ro.scoalainformala.studentmgmt.authentication.AuthenticationServiceImplTest" />
+      <option name="METHOD_NAME" value="testAuthenticateValidCredentials" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthenticationServiceImplTest.testRegisterRoleTeacher" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.scoalainformala.studentmgmt.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ro.scoalainformala.studentmgmt.authentication" />
+      <option name="MAIN_CLASS_NAME" value="ro.scoalainformala.studentmgmt.authentication.AuthenticationServiceImplTest" />
+      <option name="METHOD_NAME" value="testRegisterRoleTeacher" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthenticationServiceImplTest.testRegisterUserAlreadyExists" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ro.scoalainformala.studentmgmt.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="ro.scoalainformala.studentmgmt.authentication" />
+      <option name="MAIN_CLASS_NAME" value="ro.scoalainformala.studentmgmt.authentication.AuthenticationServiceImplTest" />
+      <option name="METHOD_NAME" value="testRegisterUserAlreadyExists" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StudentMgmtApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="student-mgmt" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="ro.scoalainformala.studentmgmt.StudentMgmtApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.AuthenticationServiceImplTest.testRegisterUserAlreadyExists" />
+        <item itemvalue="JUnit.AuthenticationServiceImplTest.testRegisterRoleTeacher" />
+        <item itemvalue="JUnit.AuthenticationServiceImplTest.testAuthenticateValidCredentials" />
+        <item itemvalue="JUnit.AssignmentControllerUnitTest.testCreateAssignment" />
+        <item itemvalue="JUnit.AssignmentControllerUnitTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55880f63-19be-48bb-871b-4793f8ba33e3" name="Changes" comment="" />
+      <created>1748338229650</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1748338229650</updated>
+      <workItem from="1748338230764" duration="11928000" />
+      <workItem from="1748852776518" duration="6954000" />
+      <workItem from="1751180689293" duration="12742000" />
+      <workItem from="1751263081358" duration="7450000" />
+      <workItem from="1751354107532" duration="7571000" />
+      <workItem from="1751439501420" duration="8553000" />
+      <workItem from="1751527116902" duration="3813000" />
+      <workItem from="1751614710809" duration="8586000" />
+      <workItem from="1752044033104" duration="1291000" />
+      <workItem from="1752045369670" duration="1334000" />
+      <workItem from="1752046745488" duration="719000" />
+      <workItem from="1752048080564" duration="12981000" />
+      <workItem from="1752131840590" duration="2460000" />
+      <workItem from="1752134378038" duration="4615000" />
+      <workItem from="1752140001864" duration="3411000" />
+      <workItem from="1752482159079" duration="2555000" />
+      <workItem from="1752485085146" duration="4875000" />
+      <workItem from="1752586039155" duration="4796000" />
+      <workItem from="1752590892223" duration="15936000" />
+      <workItem from="1752678612469" duration="5222000" />
+      <workItem from="1753007626105" duration="3246000" />
+      <workItem from="1753166750001" duration="20389000" />
+      <workItem from="1753249003923" duration="8264000" />
+      <workItem from="1753356542971" duration="872000" />
+      <workItem from="1753464395513" duration="7068000" />
+      <workItem from="1753611410738" duration="3354000" />
+      <workItem from="1753684723169" duration="22895000" />
+      <workItem from="1753769548022" duration="9079000" />
+      <workItem from="1753809565491" duration="1219000" />
+      <workItem from="1753947550089" duration="6424000" />
+      <workItem from="1754042674779" duration="6023000" />
+      <workItem from="1754290357447" duration="1624000" />
+      <workItem from="1754299642713" duration="3772000" />
+      <workItem from="1754322105153" duration="6124000" />
+      <workItem from="1754382107158" duration="10708000" />
+      <workItem from="1754586052855" duration="11322000" />
+      <workItem from="1754897820675" duration="11232000" />
+      <workItem from="1755090027425" duration="683000" />
+      <workItem from="1755100984236" duration="14384000" />
+      <workItem from="1755117102053" duration="114000" />
+      <workItem from="1755117244647" duration="1363000" />
+      <workItem from="1755150935562" duration="14015000" />
+      <workItem from="1755243181245" duration="15615000" />
+      <workItem from="1755269664723" duration="2414000" />
+      <workItem from="1755327188039" duration="17748000" />
+      <workItem from="1755415792890" duration="13648000" />
+      <workItem from="1755504514405" duration="4164000" />
+      <workItem from="1755519113254" duration="10928000" />
+      <workItem from="1755543014390" duration="6471000" />
+      <workItem from="1755594129779" duration="2100000" />
+      <workItem from="1755596258714" duration="544000" />
+      <workItem from="1755602412843" duration="2569000" />
+      <workItem from="1755628047749" duration="7431000" />
+      <workItem from="1755669002647" duration="3703000" />
+      <workItem from="1755700294156" duration="5967000" />
+      <workItem from="1755706307079" duration="611000" />
+      <workItem from="1755706944400" duration="1836000" />
+      <workItem from="1755711108082" duration="3213000" />
+      <workItem from="1755790301661" duration="12964000" />
+      <workItem from="1755848531353" duration="13720000" />
+      <workItem from="1755933514590" duration="22000" />
+      <workItem from="1755933586629" duration="4347000" />
+      <workItem from="1755939709797" duration="110000" />
+      <workItem from="1756060084486" duration="597000" />
+      <workItem from="1756915056684" duration="145000" />
+      <workItem from="1757654446373" duration="5469000" />
+      <workItem from="1757660600040" duration="1409000" />
+      <workItem from="1757662357506" duration="540000" />
+      <workItem from="1757663356929" duration="660000" />
+      <workItem from="1757664487956" duration="124000" />
+      <workItem from="1757839996533" duration="438000" />
+      <workItem from="1757840454550" duration="46000" />
+      <workItem from="1757840553694" duration="363000" />
+      <workItem from="1757841030713" duration="18000" />
+      <workItem from="1757841101488" duration="560000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.orm.jpa.JpaObjectRetrievalFailureException" package="org.springframework.orm.jpa" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>
